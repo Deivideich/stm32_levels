@@ -17,6 +17,9 @@ CFLAGS  += -isystem ../../vendor/cmsis-core/Include
 LDFLAGS := -T ../../board/$(BOARD)/linker.ld -nostartfiles -Wl,--gc-sections
 LDFLAGS += -Wl,-Map=build/$(ITEM).map
 
+LOCAL_OBJS := $(addprefix build/, $(SRCS:.c=.o))
+OBJS       := $(LOCAL_OBJS) build/startup.o
+
 all: build/$(ITEM).elf
 
 build/%.o: %.c
@@ -27,7 +30,7 @@ build/startup.o: ../../board/$(BOARD)/startup.c
 	@mkdir -p build
 	$(CC) $(CFLAGS) -c $< -o $@
 
-build/$(ITEM).elf: build/$(ITEM).o build/startup.o
+build/$(ITEM).elf: $(OBJS)
 	$(CC) $(LDFLAGS) $^ -o $@
 	$(OBJCOPY) -O binary $@ build/$(ITEM).bin
 	$(SIZE) $@
