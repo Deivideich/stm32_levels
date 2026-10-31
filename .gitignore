@@ -53,3 +53,12 @@ dkms.conf
 
 # debug information files
 *.dwo
+
+build/
+*.o
+*.elf
+*.bin
+*.d
+*.su
+.gdb_target
+!levels/*/evidence/**/*.map
