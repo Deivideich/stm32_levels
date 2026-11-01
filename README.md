@@ -5,7 +5,8 @@ Bottom-up STM32 bare-metal exercises. One item, one file, one commit.
 This repo is a self-paced guide: a 266-item roadmap, the tooling to work through it, and
 (on the author's branch) worked solutions. You can use it as a template for your own run.
 
-- Roadmap: [docs/roadmap_v4.md](docs/roadmap_v4.md)
+- Roadmap (the index and acceptance tests): [docs/roadmap_v4.md](docs/roadmap_v4.md)
+- Item cards (the exercises: why, experiment, questions, hints): [docs/items/](docs/items/README.md)
 - What you need at each stage: [docs/prerequisites.md](docs/prerequisites.md)
 
 ## Rules
@@ -27,7 +28,7 @@ This repo is a self-paced guide: a 266-item roadmap, the tooling to work through
       evidence/NNN/      captures, logs, map excerpts
     mk/                  shared makefiles
     tools/               doctor.sh, new_level.sh, new_item.sh, progress.sh, openocd.cfg, .gdbinit
-    docs/                roadmap, prerequisites, pin map, budgets
+    docs/                roadmap, prerequisites, items/ (cards + starter code), pin map, budgets
     board/               (from level 3) g431kb/ and host/ stubs
     lib/                 (later) promoted blocks: ringbuf, fsm, crc...
     vendor/              CMSIS headers, untouched
@@ -37,7 +38,7 @@ This repo is a self-paced guide: a 266-item roadmap, the tooling to work through
     make doctor                          # check your tools
     tools/new_level.sh 1                 # create levels/01_.../
     cd levels/01_*/
-    ../../tools/new_item.sh 001          # skeleton with the statement in the header
+    ../../tools/new_item.sh 001          # starter files + notes (and a card, if the item has one)
     make 001                             # build and run item 001
     make 001 OPT=-O2 SAN=1               # other optimisation level / sanitizers
     make check                           # every item of the level

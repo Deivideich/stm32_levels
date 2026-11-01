@@ -1,6 +1,6 @@
 # STM32 Bare-Metal Mastery
 
-A bottom-up curriculum for one person, one desk and two boards (three if you count the second G431KB). **266 items · 6 phases · 5 gated capstones (+1 optional) · ≈704 h of net work.**
+A bottom-up curriculum for one person, one desk and two boards (three if you count the second G431KB). **266 items · 6 phases · 5 gated capstones (+1 optional) · ≈710 h of net work.**
 
 Every item is a small, checkable exercise ("Done when: ...") and every level ends with a reusable **block** (a ring buffer, a state machine, a UART driver, a bootloader...). The idea is the same as a good FPGA roadmap: you learn by building the small pieces yourself, in an order where each one stands on the previous.
 
@@ -18,7 +18,7 @@ Every item is a small, checkable exercise ("Done when: ...") and every level end
 
 ### 0.1 Rules
 
-1. One item at a time. Inside a phase, in order. Inside a level, the order is free.
+1. One item at a time. Inside a phase, in order. Inside a level, the order is free. The roadmap line is the **index and the acceptance test**; when a card exists for the item (`docs/items/NNN.md`) read it first: it explains why the item matters, gives a starting experiment and progressive hints.
 2. Every item leaves an artifact in `evidence/NNN/` (capture, log, map excerpt, diff, test result) and one line in `notes/NNN.md` about what surprised you.
 3. An item is **PASS** (its "Done when" is met and the artifact proves it) or **GAP** (something is missing; write what in one line and come back later). A GAP is a to-do, not a judgement.
 4. **◈** marks an item where you must also **provoke the failure and observe it**. A ◈ without an artifact of the failure is a GAP even if the function works.
@@ -93,14 +93,14 @@ Drop to one item per day. Never skip a level.
 
 | Phase | Levels | Items | Count | Capstone | Approx. hours |
 |---|---|---|---|---|---|
-| 1 — Language and build | 1–3 | 001–037 | 37 | Capstone A | 62 |
+| 1 — Language and build | 1–3 | 001–037 | 37 | Capstone A | 68 |
 | 2 — Pins, time, interrupts and first serial | 4–8 | 038–087 | 50 | Capstone B | 125 |
 | 3 — Timers, analog, buses and persistence | 9–14 | 088–152 | 65 | Capstone C | 182 |
 | 4 — DMA, core, CAN, power and boot | 15–19 | 153–209 | 57 | Capstone D | 176 |
 | 5 — Control, RTOS and quality | 20–24 | 210–254 | 45 | Capstone E | 119 |
 | 6 — Dual core and cache (optional) | 25 | 255–266 | 12 | Capstone F | 40 |
 
-≈704 h in total; at 10 h/week that is ≈70 weeks, at 15 h/week ≈47. If the topic is new to you, multiply by 1.5.
+≈710 h in total; at 10 h/week that is ≈71 weeks, at 15 h/week ≈47. If the topic is new to you, multiply by 1.5.
 
 Phase 6 is optional until you have a real reason for it. Everything before it is not.
 
@@ -112,11 +112,11 @@ Foundations. Without them, everything else is copying from CubeMX with extra ste
 ### Level 1 — C that bites in embedded
 **Prerequisite:** none. **Verified with:** host `gcc`, `nm`, `objdump`, sanitizers.
 
-- **001** `S` Give module state static storage duration when it must outlive the stack frame. — *Done when:* a module keeps its state at file scope and no pointer to it escapes before it is initialised.
-- **002** `S` Make the state private with `static` and expose access only through functions. — *Done when:* `nm` shows no exported symbols you did not mean to export.
-- **003** `M` Replace a register or protocol bitfield with masks and shifts. — *Done when:* a host test pins the offsets and passes at both `-O0` and `-O2`.
-- **004** `M` Write field macros (`_POS`, `_MSK`, `GET`, `SET`) that read and write multi-bit fields without touching the rest. — *Done when:* a test exercises them with the patterns `0x00000000` and `0xFFFFFFFF` and the neighbouring bits do not change.
-- **005** `S` Trace integer promotion of `char` and `short` inside expressions. — *Done when:* you state the promoted type of three of your own expressions and `-Wconversion` confirms it.
+- **001** `M` Discover how long a variable lives: predict the output of a counter experiment and of a pointer to a dead local variable, run it with and without the sanitizer, and explain what you saw. — *Done when:* your predictions were written before running, you can say where each variable lives and for how long, and you can explain why the buggy program looked correct.
+- **002** `M` Discover who can see what: read a module's symbols with `nm`, make it export only functions, and prove it from the object file. — *Done when:* `nm` on the object shows no exported data symbols (no uppercase `B`/`D`), the only uppercase `T` symbols are your public functions, and the program still prints the same result through an accessor.
+- **003** `M` Describe a hardware register twice, as a bitfield and as masks and shifts, and compare them. — *Done when:* your masks come from the datasheet, an exhaustive test over every field combination passes at `-O0` and `-O2`, and you can explain why bitfields are risky for registers.
+- **004** `M` Make a `FIELD_SET` that replaces one field of a register without touching its neighbours, guided by a failing test suite. — *Done when:* every test passes at `-O0`, `-O2` and with sanitizers, and your notes explain each bug of the naive first attempt.
+- **005** `M` Predict the type and value of arithmetic on small integer types, and correct your guesses against the compiler until you can state the rule yourself. — *Done when:* `make 005` exits 0 with your own guesses, and you can explain why multiplying two 16-bit values is undefined behaviour.
 - **006** `M` Remove mixed signed/unsigned arithmetic and implicit narrowing (`uint8_t x; x += 200;`). — *Done when:* the build is clean with `-Wsign-compare -Wsign-conversion -Wconversion` and every narrowing is an explicit cast or a wider intermediate.
 - **007** `S` ◈ Trigger a signed overflow (`INT32_MAX + 1`) and compare `-O0` with `-O2`. — *Done when:* the results diverge, you capture it and explain the cause in one line.
 - **008** `S` Use `volatile` only where the compiler cannot know better: ISR flags, registers, memory-mapped state. — *Done when:* you delete two decorative `volatile`s without breaking anything, and the `-O2` disassembly shows a busy-wait that disappeared without `volatile`.

@@ -19,11 +19,15 @@ ifeq ($(SAN),1)
 CFLAGS += -fsanitize=undefined,address -fno-omit-frame-pointer
 endif
 
+# Rebuild when the flags change (OPT=..., SAN=1), not only when a source changes.
+FLAGS_STAMP := build/.flags
+$(shell mkdir -p build; echo '$(CC) $(CFLAGS)' | cmp -s - $(FLAGS_STAMP) 2>/dev/null || echo '$(CC) $(CFLAGS)' > $(FLAGS_STAMP))
+
 ITEM_SRCS := $(sort $(wildcard [0-9][0-9][0-9]_*.c))
 IDS       := $(sort $(foreach f,$(ITEM_SRCS),$(firstword $(subst _, ,$(f)))))
 
 define ITEM_RULE
-build/$(1): $(wildcard $(1)_*.c $(1)_*.h) | build
+build/$(1): $(wildcard $(1)_*.c $(1)_*.h) $(FLAGS_STAMP) | build
 	$$(CC) $$(CFLAGS) $$(filter %.c,$$^) -o $$@
 $(1): build/$(1)
 	@./build/$(1) && echo "[$(1)] OK"
