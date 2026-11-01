@@ -1,5 +1,7 @@
 # STM32 Bare-Metal Mastery
 
+**Version:** 4.2
+
 A bottom-up curriculum for one person, one desk and two boards (three if you count the second G431KB). **266 items · 6 phases · 5 gated capstones (+1 optional) · ≈710 h of net work.**
 
 Every item is a small, checkable exercise ("Done when: ...") and every level ends with a reusable **block** (a ring buffer, a state machine, a UART driver, a bootloader...). The idea is the same as a good FPGA roadmap: you learn by building the small pieces yourself, in an order where each one stands on the previous.

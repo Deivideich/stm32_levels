@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
-# Progress per level, from docs/roadmap_v4.md and the notes/NNN.md files.
+# Progress per level, from docs/roadmap.md and the notes/NNN.md files.
 # An item counts as done when its note has a line starting with "- Result: PASS",
 # and as a gap when it starts with "- Result: GAP".
 set -euo pipefail
 root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-road="$root/docs/roadmap_v4.md"
-[ -f "$road" ] || { echo "missing docs/roadmap_v4.md"; exit 1; }
+road="$root/docs/roadmap.md"
+[ -f "$road" ] || { echo "missing docs/roadmap.md"; exit 1; }
 
 declare -A pass gap
 for f in "$root"/levels/*/notes/[0-9][0-9][0-9].md; do

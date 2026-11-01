@@ -7,8 +7,8 @@ set -euo pipefail
 n="${1:?usage: new_level.sh LEVEL_NUMBER [folder_name]}"
 [[ "$n" =~ ^[0-9]+$ ]] || { echo "level must be a number"; exit 1; }
 root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-road="$root/docs/roadmap_v4.md"
-[ -f "$road" ] || { echo "missing docs/roadmap_v4.md"; exit 1; }
+road="$root/docs/roadmap.md"
+[ -f "$road" ] || { echo "missing docs/roadmap.md"; exit 1; }
 
 head_line="$(grep -m1 -E "^### Level ${n} " "$road" || true)"
 [ -n "$head_line" ] || { echo "Level $n is not in the roadmap"; exit 1; }
@@ -38,7 +38,7 @@ cat > "$dir/README.md" <<EOT
 $prereq
 
 Items ${first}-${last}. The statements and their "Done when" live in
-[docs/roadmap_v4.md](../../docs/roadmap_v4.md).
+[docs/roadmap.md](../../docs/roadmap.md).
 
 Create an item skeleton with:
 

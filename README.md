@@ -5,7 +5,7 @@ Bottom-up STM32 bare-metal exercises. One item, one file, one commit.
 This repo is a self-paced guide: a 266-item roadmap, the tooling to work through it, and
 (on the author's branch) worked solutions. You can use it as a template for your own run.
 
-- Roadmap (the index and acceptance tests): [docs/roadmap_v4.md](docs/roadmap_v4.md)
+- Roadmap (the index and acceptance tests): [docs/roadmap.md](docs/roadmap.md)
 - Item cards (the exercises: why, experiment, questions, hints): [docs/items/](docs/items/README.md)
 - What you need at each stage: [docs/prerequisites.md](docs/prerequisites.md)
 

@@ -113,8 +113,8 @@ set -euo pipefail
 n="${1:?usage: new_level.sh LEVEL_NUMBER [folder_name]}"
 [[ "$n" =~ ^[0-9]+$ ]] || { echo "level must be a number"; exit 1; }
 root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-road="$root/docs/roadmap_v4.md"
-[ -f "$road" ] || { echo "missing docs/roadmap_v4.md"; exit 1; }
+road="$root/docs/roadmap.md"
+[ -f "$road" ] || { echo "missing docs/roadmap.md"; exit 1; }
 
 head_line="$(grep -m1 -E "^### Level ${n} " "$road" || true)"
 [ -n "$head_line" ] || { echo "Level $n is not in the roadmap"; exit 1; }
@@ -144,7 +144,7 @@ cat > "$dir/README.md" <<EOT
 $prereq
 
 Items ${first}-${last}. The statements and their "Done when" live in
-[docs/roadmap_v4.md](../../docs/roadmap_v4.md).
+[docs/roadmap.md](../../docs/roadmap.md).
 
 Create an item skeleton with:
 
@@ -164,14 +164,14 @@ cat > tools/new_item.sh <<'EOF'
 #
 # If the item has a card (docs/items/NNN.md), its starter files are copied here and
 # you are pointed to the card. Otherwise a plain skeleton is created, with the
-# statement and its "Done when" copied from docs/roadmap_v4.md into the header.
+# statement and its "Done when" copied from docs/roadmap.md into the header.
 # Existing files are never overwritten.
 set -euo pipefail
 id="${1:?usage: new_item.sh NNN [slug_in_snake_case]}"
 [[ "$id" =~ ^[0-9]{3}$ ]] || { echo "the id must have 3 digits"; exit 1; }
 
 root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-road="$root/docs/roadmap_v4.md"
+road="$root/docs/roadmap.md"
 cards="$root/docs/items"
 
 # ---------------------------------------------------------------- card-based item
@@ -243,7 +243,7 @@ src="${id}_${slug}.c"
 cat > "$src" <<EOT
 /* ${id} - ${slug}
  *
- * ${line:-(paste the statement from docs/roadmap_v4.md here)}
+ * ${line:-(paste the statement from docs/roadmap.md here)}
  *
  * Result: PASS / GAP   (one line on why)
  */
@@ -275,13 +275,13 @@ chmod +x tools/new_item.sh
 # ---------------------------------------------------------------- tools/progress.sh
 cat > tools/progress.sh <<'EOF'
 #!/usr/bin/env bash
-# Progress per level, from docs/roadmap_v4.md and the notes/NNN.md files.
+# Progress per level, from docs/roadmap.md and the notes/NNN.md files.
 # An item counts as done when its note has a line starting with "- Result: PASS",
 # and as a gap when it starts with "- Result: GAP".
 set -euo pipefail
 root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-road="$root/docs/roadmap_v4.md"
-[ -f "$road" ] || { echo "missing docs/roadmap_v4.md"; exit 1; }
+road="$root/docs/roadmap.md"
+[ -f "$road" ] || { echo "missing docs/roadmap.md"; exit 1; }
 
 declare -A pass gap
 for f in "$root"/levels/*/notes/[0-9][0-9][0-9].md; do
@@ -415,7 +415,7 @@ Bottom-up STM32 bare-metal exercises. One item, one file, one commit.
 This repo is a self-paced guide: a 266-item roadmap, the tooling to work through it, and
 (on the author's branch) worked solutions. You can use it as a template for your own run.
 
-- Roadmap (the index and acceptance tests): [docs/roadmap_v4.md](docs/roadmap_v4.md)
+- Roadmap (the index and acceptance tests): [docs/roadmap.md](docs/roadmap.md)
 - Item cards (the exercises: why, experiment, questions, hints): [docs/items/](docs/items/README.md)
 - What you need at each stage: [docs/prerequisites.md](docs/prerequisites.md)
 
@@ -468,16 +468,11 @@ Click **Use this template** on GitHub (or fork), then run the quick start above.
 Keep your own solutions on your side: a solved item is a commit in your copy, not a change to the guide.
 EOF
 
-# ---------------------------------------------------------------- roadmap (if next to this script)
-if [ -f "$HERE/stm32_roadmap_v4.md" ]; then
-  cp "$HERE/stm32_roadmap_v4.md" docs/roadmap_v4.md
-  echo "copied: docs/roadmap_v4.md"
-elif [ ! -f docs/roadmap_v4.md ]; then
-  echo "WARNING: put stm32_roadmap_v4.md next to bootstrap.sh (or copy it to docs/roadmap_v4.md)"
-fi
+# ---------------------------------------------------------------- roadmap
+[ -f docs/roadmap.md ] || echo "WARNING: docs/roadmap.md is missing"
 
 # ---------------------------------------------------------------- level 1 + item 001
-if [ -f docs/roadmap_v4.md ]; then
+if [ -f docs/roadmap.md ]; then
   tools/new_level.sh 1 || true
   l1="$(ls -d levels/01_* 2>/dev/null | head -1 || true)"
   if [ -n "$l1" ] && ! ls "$l1"/001_*.c >/dev/null 2>&1; then

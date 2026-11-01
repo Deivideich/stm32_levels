@@ -5,14 +5,14 @@
 #
 # If the item has a card (docs/items/NNN.md), its starter files are copied here and
 # you are pointed to the card. Otherwise a plain skeleton is created, with the
-# statement and its "Done when" copied from docs/roadmap_v4.md into the header.
+# statement and its "Done when" copied from docs/roadmap.md into the header.
 # Existing files are never overwritten.
 set -euo pipefail
 id="${1:?usage: new_item.sh NNN [slug_in_snake_case]}"
 [[ "$id" =~ ^[0-9]{3}$ ]] || { echo "the id must have 3 digits"; exit 1; }
 
 root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-road="$root/docs/roadmap_v4.md"
+road="$root/docs/roadmap.md"
 cards="$root/docs/items"
 
 # ---------------------------------------------------------------- card-based item
@@ -84,7 +84,7 @@ src="${id}_${slug}.c"
 cat > "$src" <<EOT
 /* ${id} - ${slug}
  *
- * ${line:-(paste the statement from docs/roadmap_v4.md here)}
+ * ${line:-(paste the statement from docs/roadmap.md here)}
  *
  * Result: PASS / GAP   (one line on why)
  */

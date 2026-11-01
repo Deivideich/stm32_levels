@@ -1,6 +1,6 @@
 # Item cards
 
-The roadmap ([../roadmap_v4.md](../roadmap_v4.md)) is an **index**: one line per item with the
+The roadmap ([../roadmap.md](../roadmap.md)) is an **index**: one line per item with the
 acceptance test ("Done when"). A card is the exercise itself:
 
 - why the item matters in firmware,

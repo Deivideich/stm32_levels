@@ -3,7 +3,7 @@
 **Prerequisite:** none. **Verified with:** host `gcc`, `nm`, `objdump`, sanitizers.
 
 Items 001-015. The statements and their "Done when" live in
-[docs/roadmap_v4.md](../../docs/roadmap_v4.md).
+[docs/roadmap.md](../../docs/roadmap.md).
 
 Create an item skeleton with:
 
