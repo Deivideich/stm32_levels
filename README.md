@@ -3,7 +3,7 @@
 Bottom-up STM32 bare-metal exercises. One item, one file, one commit.
 
 This repo is a self-paced guide: a 266-item roadmap, the tooling to work through it, and
-(on the author's branch) worked solutions. You can use it as a template for your own run.
+the worked solutions on `main`. `guide` is the clean template: no levels, no solutions.
 
 - Roadmap (the index and acceptance tests): [docs/roadmap.md](docs/roadmap.md)
 - Item cards (the exercises: why, experiment, questions, hints): [docs/items/](docs/items/README.md)
@@ -32,6 +32,8 @@ This repo is a self-paced guide: a 266-item roadmap, the tooling to work through
     board/               (from level 3) g431kb/ and host/ stubs
     lib/                 (later) promoted blocks: ringbuf, fsm, crc...
     vendor/              CMSIS headers, untouched
+> [!WARNING]
+> `levels/` is not in `guide`: every level folder is derived from the roadmap by `tools/new_level.sh`.
 
 ## Quick start (levels 1-2, PC only)
 
@@ -54,5 +56,7 @@ An item passes when `make NNN` exits 0. Then write `- Result: PASS` in `notes/NN
 
 ## Using this as a template
 
-Click **Use this template** on GitHub (or fork), then run the quick start above.
-Keep your own solutions on your side: a solved item is a commit in your copy, not a change to the guide.
+Fork or clone this repo and run the quick start above. Keep your own solutions on your side:
+a solved item is a commit in your copy, not a change to the guide.
+
+`guide` carries no `levels/`: you create each level with `tools/new_level.sh` as you reach it.
