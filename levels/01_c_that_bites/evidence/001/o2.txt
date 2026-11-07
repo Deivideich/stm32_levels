@@ -1,0 +1,10 @@
+cc -std=c11 -O2 -g3 -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion -Wshadow -Werror -I. 001_variable_lifetime.c -o build/001
+001_variable_lifetime.c: In function ‘main’:
+001_variable_lifetime.c:60:5: error: ‘local’ is used uninitialized [-Werror=uninitialized]
+   60 |     printf("*saved right after return: %u\n", (unsigned)*saved);                    /* predicted: 42 */
+      |     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+001_variable_lifetime.c:18:14: note: ‘local’ declared here
+   18 |     uint32_t local = 42u;
+      |              ^~~~~
+cc1: all warnings being treated as errors
+make: *** [../../mk/host.mk:35: build/001] Error 1
